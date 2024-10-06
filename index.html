@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Orrery</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Controls for adjusting year -->
+    <div id="controls">
+        <div id="year-display">Earth Years: 0.00</div>
+        <input type="range" id="year-slider" min="0" max="100" step="0.1" value="0">
+    </div>
+
+    <!-- Solar system container -->
+    <div id="solar-system">
+        <div class="sun"></div>
+        <!-- Orbits and planets will be dynamically generated using JavaScript -->
+    </div>
+
+    <!-- Planet modal (initially hidden) -->
+    <div class="planet-modal" id="planet-modal">
+        <div class="modal-content">
+            <h2 id="modal-planet-name"></h2>
+            <p id="modal-description"></p>
+            <div class="facts-container" id="modal-facts"></div>
+            <button class="close-button" id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="styles/orrery.js"></script>
+</body>
+</html>

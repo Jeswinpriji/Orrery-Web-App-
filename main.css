@@ -1,0 +1,280 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#solar-system {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.sun {
+    position: absolute;
+    background: #FFD700;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 60px #FFD700;
+    cursor: pointer;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    width: 150px;  /* Increased size (3 times larger) */
+    height: 150px; /* Increased size (3 times larger) */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.sun:hover {
+    box-shadow: 0 0 8000px #FFD700;
+    transform: scale(1.1); /* Slightly scale the sun on hover */
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.distance-label {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    padding-left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 3;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease;
+}
+
+.orbit:hover .distance-label {
+    opacity: 1; /* Show label on hover */
+}
+
+.planet {
+    position: absolute;
+    border-radius: 50%;
+    transform-origin: 50% 50%;
+    cursor: pointer;
+    z-index: 1;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    width: 60px;  /* Increased size (3 times larger) */
+    height: 60px; /* Increased size (3 times larger) */
+}
+
+.planet:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transform: scale(2.0); /* Slightly enlarge the planet */
+}
+.tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: max-content;
+    max-width: 200px;
+    top: 50%;
+    left: 120%;
+    transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.tooltip h3 {
+    margin: 0 0 5px 0;
+    color: #FFD700;
+}
+
+.tooltip p {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+}
+
+.tooltip-hint {
+    display: block;
+    font-size: 0.8em;
+    color: #FFD700;
+    font-style: italic;
+}
+
+.planet:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease, visibility 0s;
+}
+
+.line-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.glow-line {
+    position: absolute;
+    height: 2px; /* Line thickness */
+    background-color: rgba(255, 255, 0, 0.7); /* Glowing color */
+    transform-origin: 0 50%; /* Rotate around the left end */
+}
+
+#controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    z-index: 3;
+}
+
+#year-display {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#year-slider {
+    width: 200px;
+    margin-top: 10px;
+}
+
+.control-button {
+    background: #FFD700;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.control-button:hover {
+    background: #FFA500;
+}
+
+.planet-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.modal-content {
+    background-color: rgba(20, 20, 40, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 90%;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    color: #FFD700;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.description {
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.facts-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.fact {
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+.fact strong {
+    color: #FFD700;
+}
+
+.close-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: #FFA500;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    #year-slider {
+        width: 150px; /* Adjust slider width for smaller screens */
+    }
+
+    .tooltip {
+        left: 50%;
+        top: -120%;
+        transform: translateX(-50%);
+        width: 150px;
+    }
+
+    .modal-content {
+        padding: 20px;
+        max-width: 400px;
+    }
+
+    #controls {
+        left: 10px; /* Reduce padding */
+        top: 10px; /* Reduce padding */
+    }
+}
